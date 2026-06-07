@@ -1,0 +1,13 @@
+{
+  "name": "Password Generator",
+  "short_name": "Passwords",
+  "description": "Cryptographically secure password generator. Works offline.",
+  "start_url": ".",
+  "scope": ".",
+  "display": "standalone",
+  "background_color": "#1a1a1a",
+  "theme_color": "#dc2626",
+  "icons": [
+    { "src": "logo.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Password Generator</title>
+    <link rel="icon" href="logo.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="logo.svg">
+    <link rel="manifest" href="manifest.webmanifest">
+    <meta name="theme-color" content="#dc2626">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="bg-blobs" aria-hidden="true"><span class="b1"></span><span class="b2"></span><span class="b3"></span></div>
+
+    <header class="topbar">
+        <img src="logo.svg" alt="Logo" class="topbar-logo">
+        <h1>Password Generator</h1>
+    </header>
+
+    <div class="container">
+        <div class="card">
+            <h2>Generate a Password</h2>
+
+            <div class="mode-row" role="radiogroup" aria-label="Password mode">
+                <label class="mode-opt"><input type="radio" name="mode" value="random" checked> Random</label>
+                <label class="mode-opt"><input type="radio" name="mode" value="passphrase"> Passphrase</label>
+            </div>
+
+            <div class="password-display">
+                <span id="password-output" aria-live="polite">Click Generate</span>
+            </div>
+
+            
+            <div class="strength-bar-wrap" aria-label="Password strength">
+                <div class="strength-bar" id="strength-bar"></div>
+            </div>
+            <p class="strength-label" id="strength-label">&nbsp;</p>
+
+            
+            <div class="slider-row">
+                <label for="length-slider" class="slider-label"><span id="length-name">Length</span>: <span id="length-display">16</span></label>
+                <input type="range" id="length-slider" min="8" max="32" value="16" step="1" aria-label="Password length">
+            </div>
+
+            
+            <div class="toggle-row" id="charset-row">
+                <label class="toggle">
+                    <input type="checkbox" id="use-upper" checked>
+                    <span class="toggle-track"></span>
+                    <span class="toggle-name">A-Z</span>
+                </label>
+                <label class="toggle">
+                    <input type="checkbox" id="use-lower" checked>
+                    <span class="toggle-track"></span>
+                    <span class="toggle-name">a-z</span>
+                </label>
+                <label class="toggle">
+                    <input type="checkbox" id="use-digits" checked>
+                    <span class="toggle-track"></span>
+                    <span class="toggle-name">0-9</span>
+                </label>
+                <label class="toggle">
+                    <input type="checkbox" id="use-special" checked>
+                    <span class="toggle-track"></span>
+                    <span class="toggle-name">!@#</span>
+                </label>
+            </div>
+
+            <p class="hint">Press <kbd>G</kbd> to generate &nbsp;&bull;&nbsp; <kbd>C</kbd> to copy</p>
+
+            <div class="btn-row">
+                <button class="btn btn-primary" id="btn-generate">&#x21BB; Generate</button>
+                <button class="btn btn-copy" id="btn-copy" title="Copy (C)" aria-label="Copy password">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                </button>
+            </div>
+        </div>
+
+        <div class="card" style="margin-top: 30px;">
+            <h2>CLI Version</h2>
+            <p>Prefer the terminal? Download the Python script and run it locally. Requires Python 3.6+, no dependencies.</p>
+            
+            <p class="cli-note">Copy to clipboard unavailable in the CLI version.</p>
+            <div class="btn-row" style="margin-top: 20px;">
+                <a class="btn btn-primary" href="https://raw.githubusercontent.com/drew-codes-things/PasswordGenerator/main/password_generator.py" download="password_generator.py">Download CLI version</a>
+            </div>
+            <p class="hint" style="margin-top: 14px; margin-bottom: 0;">Run with: <kbd>python password_generator.py</kbd></p>
+        </div>
+    </div>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+    <script src="script.js"></script>
+    <script>if ('serviceWorker' in navigator) { window.addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {})); }</script>
+
+</body>
+</html>

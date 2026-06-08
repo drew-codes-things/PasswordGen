@@ -64,7 +64,7 @@ The generator seeds the output array with 2 uppercase, 1 digit, and 1 special ch
 
 Open `index.html` directly in a browser, or visit the live site:
 
-**[https://drew-gnr.xyz/PasswordGenerator](https://drew-gnr.xyz/PasswordGenerator)**
+**[https://password-gen.drew-gnr.xyz](https://password-gen.drew-gnr.xyz/)**
 
 ```
 1. A password is generated automatically on page load
@@ -78,8 +78,8 @@ Open `index.html` directly in a browser, or visit the live site:
 ## Run Locally
 
 ```bash
-git clone https://github.com/drew-codes-things/PasswordGenerator
-cd PasswordGenerator
+git clone https://github.com/drew-codes-things/PasswordGen
+cd PasswordGen
 python -m http.server 8000
 ```
 
@@ -111,6 +111,20 @@ python password_generator.py
 - `password_generator.py` mirrors the **random** mode for offline / CLI use.
 
 ---
+
+## Get the Code
+
+Clone with git:
+
+```bash
+git clone https://github.com/drew-codes-things/PasswordGen.git
+```
+
+Or with the [GitHub CLI](https://cli.github.com/):
+
+```bash
+gh repo clone drew-codes-things/PasswordGen
+```
 
 ## License
 

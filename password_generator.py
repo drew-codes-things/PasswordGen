@@ -9,15 +9,6 @@ POOL    = UPPER + LOWER + DIGITS + SPECIAL
 
 
 def generate(length=16, use_upper=True, use_lower=True, use_digits=True, use_special=True):
-    """Generate a cryptographically secure password.
-
-    Args:
-        length (int): Password length (8-32). Default 16.
-        use_upper  (bool): Include uppercase letters.
-        use_lower  (bool): Include lowercase letters.
-        use_digits (bool): Include digits.
-        use_special(bool): Include special characters.
-    """
     active_sets = []
     if use_upper:   active_sets.append(UPPER)
     if use_lower:   active_sets.append(LOWER)

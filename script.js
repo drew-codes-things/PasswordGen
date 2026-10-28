@@ -195,6 +195,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('btn-copy').addEventListener('click', copyPassword);
 
     document.addEventListener('keydown', (e) => {
+        if (e.ctrlKey || e.metaKey || e.altKey) return;
         if (e.key === 'c' || e.key === 'C') copyPassword();
         if (e.key === 'g' || e.key === 'G') generatePassword();
     });

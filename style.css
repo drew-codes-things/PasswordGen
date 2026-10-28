@@ -64,9 +64,6 @@ p { color: var(--text-dim); margin-bottom: 15px; }
 a { color: var(--signal); text-decoration: none; transition: color .2s ease; }
 a:hover { color: #ff7a5c; }
 
-/* ============================================================
-   Panel
-   ============================================================ */
 .card {
     position: relative;
     background-color: var(--panel);
@@ -257,9 +254,6 @@ kbd {
     .toggle-row { gap: 14px; }
 }
 
-/* ============================================================
-   Background + console header (shared with drew-gnr.xyz)
-   ============================================================ */
 .bg-grid { position: fixed; inset: 0; overflow: hidden; pointer-events: none; z-index: 0; }
 .bg-grid::before {
     content: "";

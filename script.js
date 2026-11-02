@@ -64,11 +64,11 @@ function bitsToMeta(bits) {
     else if (bits < 80) level = 4;
     else                level = 5;
     const meta = {
-        1: { label: 'Weak',        color: '#ff4d2e' },
-        2: { label: 'Fair',        color: '#ffb020' },
-        3: { label: 'Good',        color: '#ffb020' },
-        4: { label: 'Strong',      color: '#35d67c' },
-        5: { label: 'Very Strong', color: '#35d67c' },
+        1: { label: 'Weak',        color: '#e5383b' },
+        2: { label: 'Fair',        color: '#f5a524' },
+        3: { label: 'Good',        color: '#f5a524' },
+        4: { label: 'Strong',      color: '#4ade80' },
+        5: { label: 'Very Strong', color: '#4ade80' },
     };
     return { level, ...meta[level] };
 }

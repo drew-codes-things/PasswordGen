@@ -37,7 +37,7 @@ Ambiguous characters (`I`, `O`, `l`, `i`, `o`, `0`, `1`) are excluded from all r
 | Digits | `0`, `1` |
 | Special | None (`!@#$%^&*()_+[]{}|;:,.<>?`) |
 
-The generator seeds the output array with 2 uppercase, 1 digit, and 1 special character, fills the remaining 8 slots from the full combined pool, then applies a Fisher-Yates shuffle using `window.crypto.getRandomValues` before displaying the result.
+The generator seeds the output with one character from each enabled set, fills the remaining slots from the combined pool, then applies a Fisher-Yates shuffle using `window.crypto.getRandomValues` before displaying the result. Random picks use rejection sampling rather than a plain modulo, so no character is favoured.
 
 `password_generator.py` mirrors this logic exactly in Python using the `secrets` module - same charset, same exclusions, same guaranteed composition, for offline / CLI generation.
 
@@ -48,10 +48,9 @@ The generator seeds the output array with 2 uppercase, 1 digit, and 1 special ch
 | Feature | Detail |
 |---|---|
 | Cryptographically secure | `window.crypto.getRandomValues` (JS) / `secrets` (Python) - no `Math.random()` |
-| Guaranteed composition | At least 2 uppercase + 1 digit + 1 special character per password |
+| Guaranteed composition | At least one character from every enabled set per password |
 | No ambiguous characters | `I O l i o 0 1` excluded - prevents misread passwords |
-| Keyboard shortcuts | `G` -> generate, `C` -> copy, then `Y` -> new / `N` -> keep, `Esc` -> dismiss |
-| Copy confirmation overlay | Prompts after copying whether to generate a new password |
+| Keyboard shortcuts | `G` -> generate, `C` -> copy |
 | Flash animation | Password display flashes on every new generation |
 | Toast notifications | Non-blocking status messages for copy success and errors |
 | Python CLI | `password_generator.py` generates passwords offline via `secrets` |
@@ -69,8 +68,7 @@ Open `index.html` directly in a browser, or visit the live site:
 ```
 1. A password is generated automatically on page load
 2. Press C (or click the copy button) to copy to clipboard
-3. A confirmation overlay appears -- press Y to generate a new one, N to keep it
-4. Press G at any time to generate a new password without copying
+3. Press G at any time to generate a new password
 ```
 
 ---
@@ -99,9 +97,6 @@ python password_generator.py
 |---|---|
 | `G` | Generate a new password |
 | `C` | Copy current password to clipboard |
-| `Y` | Confirm overlay: generate a new password |
-| `N` / `Esc` | Confirm overlay: dismiss and keep current password |
-| `Enter` | Confirm overlay: same as `Y` |
 
 ---
 

@@ -10,16 +10,15 @@ const SEPS = '-_.+=';
 
 let currentPassword = '';
 
-function getRandom(str) {
-    const arr = new Uint32Array(1);
-    window.crypto.getRandomValues(arr);
-    return str[arr[0] % str.length];
-}
-
 function randomInt(n) {
     const arr = new Uint32Array(1);
-    window.crypto.getRandomValues(arr);
+    const limit = Math.floor(0x100000000 / n) * n;
+    do { window.crypto.getRandomValues(arr); } while (arr[0] >= limit);
     return arr[0] % n;
+}
+
+function getRandom(str) {
+    return str[randomInt(str.length)];
 }
 
 function getMode() {
@@ -49,10 +48,10 @@ function getActivePool() {
 
 function classPoolSize(pw) {
     let pool = 0;
-    if (/[a-z]/.test(pw))         pool += 23;
-    if (/[A-Z]/.test(pw))         pool += 24;
-    if (/[0-9]/.test(pw))         pool += 8;
-    if (/[^a-zA-Z0-9]/.test(pw))  pool += 23;
+    if (/[a-z]/.test(pw))         pool += CHARS.lower.length;
+    if (/[A-Z]/.test(pw))         pool += CHARS.upper.length;
+    if (/[0-9]/.test(pw))         pool += CHARS.digits.length;
+    if (/[^a-zA-Z0-9]/.test(pw))  pool += CHARS.special.length;
     return pool;
 }
 
@@ -107,9 +106,7 @@ function generateRandom() {
     while (pw.length < length) pw.push(getRandom(pool));
 
     for (let i = pw.length - 1; i > 0; i--) {
-        const arr = new Uint32Array(1);
-        window.crypto.getRandomValues(arr);
-        const j = arr[0] % (i + 1);
+        const j = randomInt(i + 1);
         [pw[i], pw[j]] = [pw[j], pw[i]];
     }
 

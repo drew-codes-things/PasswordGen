@@ -1,126 +1,51 @@
-<div align="center">
+# Password generator
 
-# PasswordGenerator
+![Screenshot](screenshot.jpg)
 
-**A browser-based password generator. Cryptographically secure, keyboard-driven, zero dependencies.**
-
-[![HTML](https://img.shields.io/badge/html-drew?style=flat-square&logo=html5&logoColor=FFFFFF&color=E34C26)](https://html.spec.whatwg.org/)
-[![CSS](https://img.shields.io/badge/css-drew?style=flat-square&logo=css&logoColor=FFFFFF&color=663399)](https://www.w3.org/TR/css/#css)
-[![JavaScript](https://img.shields.io/badge/javascript-drew?style=flat-square&logo=javascript&logoColor=F7DF1E&color=000000)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
-[![License](https://img.shields.io/badge/license-MIT-green?style=flat-square)](LICENSE)
-
-</div>
-
----
-
-## Overview
-
-PasswordGenerator produces a password on every load and on demand. It has two modes:
-
-- **Random** - an adjustable-length password (8-32) built from the character classes you enable (upper, lower, digits, special), guaranteeing at least one character from each active set. Characters are shuffled using a Fisher-Yates algorithm backed by `window.crypto.getRandomValues`, so no `Math.random()` is involved anywhere.
-- **Passphrase** - a word-based password of 3-10 short, unambiguous words, capitalised, joined by a random separator, with a trailing 2-digit number.
-
-The strength meter shows a label plus the **estimated entropy in bits** for the current output, so you can see exactly how strong it is.
-
-Ambiguous characters (`I`, `O`, `l`, `i`, `o`, `0`, `1`) are excluded from all random character sets by design - this prevents copy-paste confusion and misreads when writing passwords down.
-
----
-
-## How It Works
-
-`script.js` defines four hardened character sets:
-
-| Set | Characters excluded |
-|---|---|
-| Uppercase | `I`, `O` |
-| Lowercase | `i`, `l`, `o` |
-| Digits | `0`, `1` |
-| Special | None (`!@#$%^&*()_+[]{}|;:,.<>?`) |
-
-The generator seeds the output with one character from each enabled set, fills the remaining slots from the combined pool, then applies a Fisher-Yates shuffle using `window.crypto.getRandomValues` before displaying the result. Random picks use rejection sampling rather than a plain modulo, so no character is favoured.
-
-`password_generator.py` mirrors this logic exactly in Python using the `secrets` module - same charset, same exclusions, same guaranteed composition, for offline / CLI generation.
-
----
+Strong random passwords and passphrases made in the browser. Live at <https://password-gen.drew-gnr.xyz/>.
 
 ## Features
 
-| Feature | Detail |
-|---|---|
-| Cryptographically secure | `window.crypto.getRandomValues` (JS) / `secrets` (Python) - no `Math.random()` |
-| Guaranteed composition | At least one character from every enabled set per password |
-| No ambiguous characters | `I O l i o 0 1` excluded - prevents misread passwords |
-| Keyboard shortcuts | `G` -> generate, `C` -> copy |
-| Flash animation | Password display flashes on every new generation |
-| Toast notifications | Non-blocking status messages for copy success and errors |
-| Python CLI | `password_generator.py` generates passwords offline via `secrets` |
-| Installable (PWA) | Web manifest + service worker - install it and generate passwords fully offline |
-| No install or server | Runs entirely from `index.html` in any modern browser |
+- Uses `crypto.getRandomValues` with rejection sampling, so every character is equally likely
+- Length from 8 to 64, with a slider and a number box
+- Upper case, lower case, digits and symbols, each one on or off; at least one type always stays on
+- Every password contains at least one character from each type you pick
+- Optional "avoid look-alikes" setting drops `I O i l o 0 1 |`
+- Strength meter with an entropy estimate in bits
+- Passphrase mode: 3 to 10 random words from the [EFF long word list](https://www.eff.org/dice) (7,776 words, about 12.9 bits each), with a choice of dash, dot, underscore or space between them, optional capitals, and an optional digit added to one word
+- Keyboard: <kbd>G</kbd> makes a new one, <kbd>C</kbd> copies it, <kbd>P</kbd> switches between password and passphrase
+- Options are remembered in the browser. Passwords are never stored or sent anywhere
 
----
+## Command-line version
 
-## Usage
-
-Open `index.html` directly in a browser, or visit the live site:
-
-**[https://password-gen.drew-gnr.xyz](https://password-gen.drew-gnr.xyz/)**
-
-```
-1. A password is generated automatically on page load
-2. Press C (or click the copy button) to copy to clipboard
-3. Press G at any time to generate a new password
-```
-
----
-
-## Run Locally
+`password_generator.py` needs Python 3.6 or newer and nothing else.
 
 ```bash
-git clone https://github.com/drew-codes-things/PasswordGen
-cd PasswordGen
-python -m http.server 8000
+python3 password_generator.py
+python3 password_generator.py -n 5 -l 24
+python3 password_generator.py -n 1 -l 32 --no-symbols
+python3 password_generator.py -p -n 3
+python3 password_generator.py -p -n 1 -w 8 --separator space --capitalise
 ```
 
-Then open `http://127.0.0.1:8000` in your browser.
+Flags: `-l/--length`, `-n/--count`, `--no-upper`, `--no-lower`, `--no-digits`, `--no-symbols`, `--allow-look-alikes`, and for passphrases `-p/--passphrase`, `-w/--words`, `--separator dash|dot|underscore|space`, `--capitalise`, `--no-number`. The word list is built into the script, so it is still a single file. Without `-n` in a terminal it asks you questions instead.
 
-To generate passwords from the command line instead:
+## Files
 
-```bash
-python password_generator.py
-```
+| Path | What it is |
+| --- | --- |
+| `index.html` | The page |
+| `assets/generator.js` | Password, passphrase and strength logic, also loadable in Node |
+| `assets/words.js` | The EFF long word list |
+| `assets/app.js` | Page behaviour |
+| `assets/theme.css`, `assets/ui.js` | Shared drew-gnr.xyz look and helpers |
+| `assets/fonts/` | IBM Plex, self-hosted (SIL OFL, see `OFL.txt`) |
+| `tests/generator.test.js` | `node tests/generator.test.js` |
 
----
+## Credits
 
-## Keyboard Reference
+The word list is the EFF's long word list, published by the Electronic Frontier Foundation under [CC BY 3.0 US](https://creativecommons.org/licenses/by/3.0/us/).
 
-| Key | Action |
-|---|---|
-| `G` | Generate a new password |
-| `C` | Copy current password to clipboard |
+## Hosting
 
----
-
-## Notes
-
-- The passphrase wordlist lives in `script.js`; entropy is reported honestly as `words × log2(listLength)` plus the separator and trailing-number contributions.
-- `password_generator.py` mirrors the **random** mode for offline / CLI use.
-
----
-
-## Get the Code
-
-Clone with git:
-
-```bash
-git clone https://github.com/drew-codes-things/PasswordGen.git
-```
-
-Or with the [GitHub CLI](https://cli.github.com/):
-
-```bash
-gh repo clone drew-codes-things/PasswordGen
-```
-
-## License
-
-MIT - made by [Drew](https://github.com/drew-codes-things)
+Static files only. Serve the folder as it is; `CNAME` is set for GitHub Pages.

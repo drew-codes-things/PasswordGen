@@ -1,100 +1,125 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Password Generator</title>
-    <link rel="icon" href="logo.svg" type="image/svg+xml">
-    <link rel="apple-touch-icon" href="logo.svg">
-    <link rel="manifest" href="manifest.webmanifest">
-    <meta name="theme-color" content="#0a0a0b">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Password generator | Drew's Realm</title>
+<meta name="description" content="Strong random passwords and passphrases made in your browser. Nothing is sent anywhere or saved.">
+<meta name="theme-color" content="#0a0a0b">
+<meta name="color-scheme" content="dark">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Drew's Realm">
+<meta property="og:title" content="Password generator">
+<meta property="og:description" content="Strong random passwords and passphrases made in your browser. Nothing is sent anywhere or saved.">
+<meta property="og:url" content="https://password-gen.drew-gnr.xyz/">
+<link rel="canonical" href="https://password-gen.drew-gnr.xyz/">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/theme.css">
+<link rel="stylesheet" href="assets/app.css">
 </head>
 <body>
+<header class="topbar">
+    <a class="brand" href="https://drew-gnr.xyz/"><img class="brand-logo" src="assets/logo.svg" alt=""><span class="brand-name">Drew's Realm</span></a>
+    <span class="here">Password generator</span>
+    <nav class="topbar-links"><a class="btn-ghost" href="https://drew-gnr.xyz/catalogue/">More tools</a></nav>
+</header>
 
-    <header class="topbar">
-        <img src="logo.svg" alt="Logo" class="topbar-logo">
-        <h1>Password Generator</h1>
-    </header>
+<main class="wrap">
+    <h1 class="h">Password generator<span class="dot">.</span></h1>
+    <p class="lede">Strong random passwords and passphrases, made in your browser with its secure random number generator. Nothing is sent anywhere and nothing is saved.</p>
 
-    <div class="container">
-        <div class="card">
-            <h2>Generate a Password</h2>
-
-            <div class="mode-row" role="radiogroup" aria-label="Password mode">
-                <label class="mode-opt"><input type="radio" name="mode" value="random" checked> Random</label>
-                <label class="mode-opt"><input type="radio" name="mode" value="passphrase"> Passphrase</label>
-            </div>
-
-            <div class="password-display">
-                <span id="password-output" aria-live="polite">Click Generate</span>
-            </div>
-
-            
-            <div class="strength-bar-wrap" aria-label="Password strength">
-                <div class="strength-bar" id="strength-bar"></div>
-            </div>
-            <p class="strength-label" id="strength-label">&nbsp;</p>
-
-            
-            <div class="slider-row">
-                <label for="length-slider" class="slider-label"><span id="length-name">Length</span>: <span id="length-display">16</span></label>
-                <input type="range" id="length-slider" min="8" max="32" value="16" step="1" aria-label="Password length">
-            </div>
-
-            
-            <div class="toggle-row" id="charset-row">
-                <label class="toggle">
-                    <input type="checkbox" id="use-upper" checked>
-                    <span class="toggle-track"></span>
-                    <span class="toggle-name">A-Z</span>
-                </label>
-                <label class="toggle">
-                    <input type="checkbox" id="use-lower" checked>
-                    <span class="toggle-track"></span>
-                    <span class="toggle-name">a-z</span>
-                </label>
-                <label class="toggle">
-                    <input type="checkbox" id="use-digits" checked>
-                    <span class="toggle-track"></span>
-                    <span class="toggle-name">0-9</span>
-                </label>
-                <label class="toggle">
-                    <input type="checkbox" id="use-special" checked>
-                    <span class="toggle-track"></span>
-                    <span class="toggle-name">!@#</span>
-                </label>
-            </div>
-
-            <p class="hint">Press <kbd>G</kbd> to generate &nbsp;&bull;&nbsp; <kbd>C</kbd> to copy</p>
-
-            <div class="btn-row">
-                <button class="btn btn-primary" id="btn-generate">&#x21BB; Generate</button>
-                <button class="btn btn-copy" id="btn-copy" title="Copy (C)" aria-label="Copy password">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-                </button>
-            </div>
+    <section class="card" aria-labelledby="out-title">
+        <h2 id="out-title" class="sr-only">Your password</h2>
+        <div class="pw-box"><output id="pw" class="pw" aria-live="polite"></output></div>
+        <div class="meter" aria-hidden="true"><i id="meterBar"></i></div>
+        <div class="meter-row"><span id="strengthLabel"></span><span id="bits" class="muted"></span></div>
+        <div class="btn-row lg">
+            <button type="button" class="btn-go" id="generate">Generate</button>
+            <button type="button" class="btn-ghost" id="copy">Copy</button>
         </div>
+        <p class="hint">Press <kbd>G</kbd> for a new one, <kbd>C</kbd> to copy and <kbd>P</kbd> to switch between password and passphrase.</p>
+    </section>
 
-        <div class="card" style="margin-top: 30px;">
-            <h2>CLI Version</h2>
-            <p>Prefer the terminal? Download the Python script and run it locally. Requires Python 3.6+, no dependencies.</p>
-            
-            <p class="cli-note">Copy to clipboard unavailable in the CLI version.</p>
-            <div class="btn-row" style="margin-top: 20px;">
-                <a class="btn btn-primary" href="https://raw.githubusercontent.com/drew-codes-things/PasswordGen/main/password_generator.py" download="password_generator.py">Download CLI version</a>
+    <section class="card" aria-labelledby="opt-title">
+        <h2 id="opt-title">Options</h2>
+        <fieldset>
+            <legend>Type</legend>
+            <div class="opts">
+                <button type="button" class="opt" data-mode="password" aria-pressed="true">Password</button>
+                <button type="button" class="opt" data-mode="passphrase" aria-pressed="false">Passphrase</button>
             </div>
-            <p class="hint" style="margin-top: 14px; margin-bottom: 0;">Run with: <kbd>python password_generator.py</kbd></p>
+        </fieldset>
+        <div id="pwOpts">
+        <fieldset>
+            <legend>Length <span class="legend-value" id="lengthValue">16</span></legend>
+            <div class="length-row">
+                <input type="range" id="lengthRange" aria-label="Password length">
+                <input type="number" id="lengthNumber" aria-label="Password length in characters">
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend>Characters</legend>
+            <div class="opts">
+                <button type="button" class="opt" data-set="upper" aria-pressed="true">A&ndash;Z</button>
+                <button type="button" class="opt" data-set="lower" aria-pressed="true">a&ndash;z</button>
+                <button type="button" class="opt" data-set="digits" aria-pressed="true">0&ndash;9</button>
+                <button type="button" class="opt" data-set="symbols" aria-pressed="true">!@#$</button>
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend>Readability</legend>
+            <div class="opts">
+                <button type="button" class="opt" id="avoid" aria-pressed="true">Avoid look-alikes<span class="n">I O i l o 0 1 |</span></button>
+            </div>
+            <p class="hint">Every password contains at least one of each character type you pick. Your options are remembered in this browser; the passwords are not.</p>
+        </fieldset>
         </div>
-    </div>
+        <div id="ppOpts" hidden>
+        <fieldset>
+            <legend>Words <span class="legend-value" id="wordsValue">6</span></legend>
+            <div class="length-row">
+                <input type="range" id="wordsRange" aria-label="Number of words">
+                <input type="number" id="wordsNumber" aria-label="Number of words in the passphrase">
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend>Between words</legend>
+            <div class="opts">
+                <button type="button" class="opt" data-sep="-" aria-pressed="true">Dash<span class="n">-</span></button>
+                <button type="button" class="opt" data-sep="." aria-pressed="false">Dot<span class="n">.</span></button>
+                <button type="button" class="opt" data-sep="_" aria-pressed="false">Underscore<span class="n">_</span></button>
+                <button type="button" class="opt" data-sep=" " aria-pressed="false">Space</button>
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend>Extras</legend>
+            <div class="opts">
+                <button type="button" class="opt" id="capitalise" aria-pressed="false">Capitalise words</button>
+                <button type="button" class="opt" id="addNumber" aria-pressed="true">Add a number</button>
+            </div>
+            <p class="hint">Words are picked at random from the <a href="https://www.eff.org/dice">EFF long word list</a> of 7,776 words. Passphrases are easier to type and remember than a jumble of characters, at the same strength.</p>
+        </fieldset>
+        </div>
+    </section>
 
-    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <section class="card" aria-labelledby="cli-title">
+        <h2 id="cli-title">Command-line version</h2>
+        <p class="muted">The same generator as a Python script, for when you'd rather stay in a terminal. Python 3.6 or newer, nothing to install.</p>
+        <div class="btn-row">
+            <a class="btn-quiet" href="password_generator.py" download>Download password_generator.py</a>
+        </div>
+        <p class="hint">Run <code>python3 password_generator.py</code> for the interactive version, or <code>python3 password_generator.py -n 5 -l 24</code> to print five 24-character passwords.</p>
+    </section>
+</main>
 
-    <script src="script.js"></script>
-    <script>if ('serviceWorker' in navigator) { window.addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {})); }</script>
+<footer class="foot">
+    Made by <a href="https://drew-gnr.xyz/">Drew</a><span class="sep">&middot;</span><a href="https://github.com/drew-codes-things/PasswordGen">Source</a><span class="sep">&middot;</span><a href="https://drew-gnr.xyz/privacy/">Privacy</a>
+</footer>
 
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script src="assets/ui.js"></script>
+<script src="assets/words.js"></script>
+<script src="assets/generator.js"></script>
+<script src="assets/app.js"></script>
 </body>
 </html>

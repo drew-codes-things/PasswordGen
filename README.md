@@ -42,6 +42,7 @@ Flags: `-l/--length`, `-n/--count`, `--no-upper`, `--no-lower`, `--no-digits`, `
 | `assets/fonts/` | IBM Plex, self-hosted (SIL OFL, see `OFL.txt`) |
 | `tests/generator.test.js` | `node tests/generator.test.js` |
 | `tests/app-settings.test.js` | `node tests/app-settings.test.js` (loads the page scripts with a stub DOM) |
+| `tests/test_password_generator.py` | `python -m pytest tests` (the Python CLI) |
 
 ## Credits
 

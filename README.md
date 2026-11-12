@@ -49,4 +49,4 @@ The word list is the EFF's long word list, published by the Electronic Frontier 
 
 ## Hosting
 
-Static files only. Serve the folder as it is; `CNAME` is set for GitHub Pages.
+Static files only. Serve the folder as it is.

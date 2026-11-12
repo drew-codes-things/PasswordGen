@@ -5,7 +5,12 @@
     var SETTINGS_KEY = 'passwordgen_settings';
     var SET_NAMES = ['upper', 'lower', 'digits', 'symbols'];
 
-    var saved = ui.get(SETTINGS_KEY, {});
+    function isPlainObject(value) {
+        return Object.prototype.toString.call(value) === '[object Object]';
+    }
+
+    var stored = ui.get(SETTINGS_KEY, {});
+    var saved = isPlainObject(stored) ? stored : {};
     var settings = {
         length: gen.clampLength(saved.length || 16),
         upper: saved.upper !== false,

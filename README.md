@@ -41,6 +41,7 @@ Flags: `-l/--length`, `-n/--count`, `--no-upper`, `--no-lower`, `--no-digits`, `
 | `assets/theme.css`, `assets/ui.js` | Shared drew-gnr.xyz look and helpers |
 | `assets/fonts/` | IBM Plex, self-hosted (SIL OFL, see `OFL.txt`) |
 | `tests/generator.test.js` | `node tests/generator.test.js` |
+| `tests/app-settings.test.js` | `node tests/app-settings.test.js` (loads the page scripts with a stub DOM) |
 
 ## Credits
 

@@ -486,9 +486,10 @@ def main(argv=None):
     parser.add_argument("--separator", choices=sorted(SEPARATORS), default="dash", help="what goes between words (default dash)")
     parser.add_argument("--capitalise", action="store_true", help="start each word with a capital")
     parser.add_argument("--no-number", action="store_true", help="leave out the digit added to one word")
-    args = parser.parse_args(argv)
+    given = sys.argv[1:] if argv is None else argv
+    args = parser.parse_args(given)
 
-    if args.count <= 0 and sys.stdin.isatty():
+    if not given and sys.stdin.isatty():
         interactive()
         return 0
     try:

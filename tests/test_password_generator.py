@@ -61,3 +61,24 @@ def test_word_count_limits():
         with pytest.raises(ValueError, match="words must be between"):
             pg.generate_passphrase(words)
 
+
+@pytest.fixture
+def terminal(monkeypatch):
+    calls = []
+    monkeypatch.setattr(pg.sys.stdin, "isatty", lambda: True, raising=False)
+    monkeypatch.setattr(pg, "interactive", lambda: calls.append("interactive"))
+    return calls
+
+
+def test_options_in_a_terminal_are_used_not_ignored(terminal, capsys):
+    assert pg.main(["-p", "-l", "40"]) == 0
+    assert terminal == []
+    assert len(capsys.readouterr().out.strip().split("-")) == 6
+    assert pg.main(["-l", "40"]) == 0
+    assert terminal == []
+    assert len(capsys.readouterr().out.strip()) == 40
+
+
+def test_no_options_in_a_terminal_asks_questions(terminal):
+    assert pg.main([]) == 0
+    assert terminal == ["interactive"]

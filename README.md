@@ -28,7 +28,7 @@ python3 password_generator.py -p -n 3
 python3 password_generator.py -p -n 1 -w 8 --separator space --capitalise
 ```
 
-Flags: `-l/--length`, `-n/--count`, `--no-upper`, `--no-lower`, `--no-digits`, `--no-symbols`, `--allow-look-alikes`, and for passphrases `-p/--passphrase`, `-w/--words`, `--separator dash|dot|underscore|space`, `--capitalise`, `--no-number`. The word list is built into the script, so it is still a single file. Without `-n` in a terminal it asks you questions instead.
+Flags: `-l/--length`, `-n/--count`, `--no-upper`, `--no-lower`, `--no-digits`, `--no-symbols`, `--allow-look-alikes`, and for passphrases `-p/--passphrase`, `-w/--words`, `--separator dash|dot|underscore|space`, `--capitalise`, `--no-number`. The word list is built into the script, so it is still a single file. Run it in a terminal with no options at all and it asks you questions instead; any option prints the result and exits.
 
 ## Files
 

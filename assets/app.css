@@ -3,11 +3,11 @@
     align-items: center;
     justify-content: center;
     min-height: 96px;
-    padding: 20px 18px;
-    margin-bottom: 16px;
-    background: var(--void);
+    padding: var(--s-5) var(--s-4);
+    margin-bottom: var(--s-4);
+    background: var(--bg-sunken);
     border: 1px solid var(--line);
-    border-radius: var(--radius);
+    border-radius: var(--r-lg);
 }
 .pw {
     font-family: var(--mono);
@@ -21,17 +21,17 @@
     user-select: all;
 }
 .pw.phrase { word-break: break-word; letter-spacing: .01em; }
-.pw .ch-d { color: var(--amber); }
-.pw .ch-s { color: var(--signal); }
-.pw.flash { animation: pwflash .35s ease; }
+.pw .ch-d { color: var(--warn); }
+.pw .ch-s { color: var(--accent-text); }
+.pw.flash { animation: pwflash var(--dur-rise) var(--ease); }
 @keyframes pwflash { from { opacity: .25; transform: translateY(3px); } to { opacity: 1; transform: none; } }
 
-.meter { height: 6px; background: var(--line); border-radius: 6px; overflow: hidden; }
-.meter i { display: block; height: 100%; width: 0; border-radius: 6px; transition: width .3s ease, background-color .3s ease; }
-.meter-row { display: flex; justify-content: space-between; gap: 12px; margin: 8px 0 20px; font-size: .78rem; }
+.meter { height: 4px; background: var(--line); border-radius: var(--r-pill); overflow: hidden; }
+.meter i { display: block; height: 100%; width: 0; border-radius: var(--r-pill); transition: width .3s var(--ease), background-color .3s var(--ease); }
+.meter-row { display: flex; justify-content: space-between; gap: var(--s-3); margin: var(--s-2) 0 var(--s-5); font-size: var(--fs-sm); }
 .meter-row #strengthLabel { font-weight: 600; }
 
-.length-row { display: grid; grid-template-columns: 1fr 84px; gap: 14px; align-items: center; }
-.length-row input[type="number"] { text-align: center; font-family: var(--mono); }
+.length-row { display: grid; grid-template-columns: 1fr 84px; gap: var(--s-4); align-items: center; }
+.length-row input[type="number"] { text-align: center; font-family: var(--mono); padding: 0 var(--s-3); }
 
-.legend-value { color: var(--text); font-family: var(--mono); margin-left: 6px; }
+.legend-value { color: var(--accent-text); font-family: var(--mono); margin-left: var(--s-2); }

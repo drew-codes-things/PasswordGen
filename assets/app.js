@@ -41,7 +41,7 @@
     var ppOpts = document.getElementById('ppOpts');
     var current = '';
 
-    var LEVEL_COLOURS = ['', 'var(--signal)', 'var(--amber)', '#e8c547', 'var(--phosphor)', 'var(--phosphor)'];
+    var LEVEL_COLOURS = ['', 'var(--accent-text)', 'var(--warn)', '#e8c547', 'var(--ok)', 'var(--ok)'];
 
     function save() { ui.set(SETTINGS_KEY, settings); }
 
